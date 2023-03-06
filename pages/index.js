@@ -1,13 +1,13 @@
-import Login from "@/components/Login";
 import Head from "next/head";
+import Login from "../components/Login";
 import Header from "../components/Header";
 import { getSession } from "next-auth/react";
 
 export default function Home({
 session
 }) {
-  {/* if user is not logged in then we display the login page */}
-  if(!session) return <Login />;
+  /* if user is not logged in then we display the login page */
+  //if (!session) return <Login />;
   return (
     <div>
       <Head>
@@ -15,6 +15,7 @@ session
       </Head>
 
       <Header />
+      <Login />
       <main></main>
     </div>
   );

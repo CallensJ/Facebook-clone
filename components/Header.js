@@ -15,19 +15,22 @@ import {
   SearchIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/outline";
+import { signOut, useSession } from "next-auth/react"
 
 function Header() {
+  const { data: session } = useSession()
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">
-      {/*Left */}
+      {/*======navbar logo ======*/}
       <div className="flex items-center">
         <Image
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png"
           alt="logo"
           width={40}
           height={40}
-          layout="fixed"
+          
         />
+         {/*====== searchbar ======*/}
         <div className="flex ml-2 items-center rounded-full bg-gray-100 p-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +54,7 @@ function Header() {
           />
         </div>
       </div>
-      {/*Center */}
+      {/*======navbar icons ======*/}
       <div className="flex justify-center flex-grow">
         <div className="flex space-x-6 md:space-x-2">
           <HeaderIcon active Icon={HomeIcon} />
@@ -61,8 +64,15 @@ function Header() {
           <HeaderIcon Icon={UserGroupIcon} />
         </div>
       </div>
-      {/*Right */}
+      {/*======navbar options ======*/}
       <div className="flex items-center sm:space-x-2 justify-end">
+        <Image onClick={() => signOut()}
+        className="rounded-full cursor-pointer"
+        src={session.user.image}
+        width="40"
+        height="40"
+        alt="image"
+        />
         <p className=" whitespace-nowrap font-semibold pr-3">Callens Johan</p>
         <ViewGridIcon className="icon" />
         <ChatIcon className="icon" />

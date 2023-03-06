@@ -11,7 +11,7 @@ const Login = () => {
         width={400}
         alt="image"
          />
-         <h1 onClick={() => signIn("google")} className="p-5 bg-blue-500 rounded-full text-white text-center cursor-pointer">Login</h1>
+         <h1 onClick={() => signIn()} className="p-5 bg-blue-500 rounded-full text-white text-center cursor-pointer">Login</h1>
     </div>
   )
 }
