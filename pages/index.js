@@ -1,19 +1,31 @@
-import Head from 'next/head';
+import Login from "@/components/Login";
+import Head from "next/head";
 import Header from "../components/Header";
+import { getSession } from "next-auth/react";
 
-
-
-export default function Home() {
+export default function Home({
+session
+}) {
+  {/* if user is not logged in then we display the login page */}
+  if(!session) return <Login />;
   return (
     <div>
-
       <Head>
         <title>Facebook</title>
       </Head>
-     
 
-    <Header />
+      <Header />
+      <main></main>
     </div>
+  );
+}
 
-  )
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      session
+    }
+  }
 }
