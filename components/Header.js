@@ -18,7 +18,9 @@ import {
 import { signOut, useSession } from "next-auth/react"
 
 function Header() {
-  const { data: session } = useSession()
+  const {data:session} = useSession();
+  console.log(session);
+
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">
       {/*======navbar logo ======*/}
@@ -66,14 +68,19 @@ function Header() {
       </div>
       {/*======navbar options ======*/}
       <div className="flex items-center sm:space-x-2 justify-end">
-        <Image onClick={() => signOut()}
-        className="rounded-full cursor-pointer"
-        src={session.user.image}
-        width="40"
-        height="40"
-        alt="image"
-        />
-        <p className=" whitespace-nowrap font-semibold pr-3">Callens Johan</p>
+        
+            <Image onClick={() => signOut()}
+            className="rounded-full cursor-pointer"
+            src={session}
+            width="40"
+            height="40"
+            alt="profile image"
+            />
+        
+        
+        
+        <p className="whitespace-nowrap font-semibold pr-3">jojo</p>
+        
         <ViewGridIcon className="icon" />
         <ChatIcon className="icon" />
         <BellIcon className="icon" />

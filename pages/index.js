@@ -1,13 +1,12 @@
+import Login from "@/components/Login";
 import Head from "next/head";
-import Login from "../components/Login";
 import Header from "../components/Header";
-import { getSession } from "next-auth/react";
+import { useSession, signOut, getSession} from "next-auth/react";
 
-export default function Home({
-session
-}) {
-  /* if user is not logged in then we display the login page */
-  //if (!session) return <Login />;
+export default function Home({ session }) {
+  //const { data: session } = useSession();
+  console.log(session);
+  if(!session) return <Login />
   return (
     <div>
       <Head>
@@ -15,18 +14,17 @@ session
       </Head>
 
       <Header />
-      <Login />
       <main></main>
     </div>
   );
-}
+  }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) =>{
   const session = await getSession(context);
 
   return {
-    props: {
-      session
-    }
+      props: { session },
+
   }
+  
 }
