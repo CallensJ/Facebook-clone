@@ -71,7 +71,7 @@ function Header() {
         
             <Image onClick={() => signOut()}
             className="rounded-full cursor-pointer"
-            src={session}
+           
             width="40"
             height="40"
             alt="profile image"
