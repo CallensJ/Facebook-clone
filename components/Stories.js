@@ -4,14 +4,14 @@ import StoryCard from "./StoryCard";
 
 const stories = [
     {
-      name: "britt scott clark",
-      src: "https://static.wikia.nocookie.net/vldl/images/8/82/Britt.jpg/revision/latest/scale-to-width-down/400?cb=20201104114524.jpg",
+      name: "Mama Mia",
+      src: "https://thumbs.dreamstime.com/b/belle-for%C3%AAt-tropicale-%C3%A0-l-itin%C3%A9raire-am%C3%A9nag%C3%A9-pour-amateurs-de-la-nature-de-ka-d-ang-36703721.jpg",
       profile:
         "https://static.wikia.nocookie.net/vldl/images/8/82/Britt.jpg/revision/latest/scale-to-width-down/400?cb=20201104114524.jpg",
     },
     {
       name: "lara croft",
-      src: "https://images.unsplash.com/photo-1637154058489-fdd2c039809d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFyYXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60.jpg",
+      src: "https://images.unsplash.com/photo-1678260748426-f0901434d81c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80.jpg",
       profile:
         "https://images.unsplash.com/photo-1637154073552-c5687cdad7f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFyYXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60.jpg",
     },
@@ -23,9 +23,9 @@ const stories = [
     },
     {
       name: "Arwen",
-      src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80.jpg",
+      src: "https://images.unsplash.com/photo-1678219716027-1352ee0ded50?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
       profile:
-        "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80.jpg",
+        "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEzNzYzNn0?utm_source=dictionnaire&utm_medium=referral",
     },
     
   ];
