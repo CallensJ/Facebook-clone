@@ -4,53 +4,51 @@ import { useSession } from "next-auth/react";
 import { EmojiHappyIcon } from "@heroicons/react/outline";
 import { CameraIcon, VideoCameraIcon } from "@heroicons/react/solid";
 import { db, storage } from "../firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes, listAll } from "firebase/storage";
-import { v4 } from "uuid";
+
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 function InputBox() {
   const { data: session } = useSession();
   const inputRef = useRef(null);
   const [imageUpload, setImageUpload] = useState(null);
-  const imageListRef = ref(storage, "images/");
+
   const filepickerRef = useRef(null);
 
-
-  /*======Start uploadImage function======*/
-  const uploadImage = () => {
-    console.log("submitted");
-    if (imageUpload == null) return;
-    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then(() => {
-      alert("Successfully uploaded");
-    });
-  };
-  useEffect(() => {
-    listAll(imageListRef).then((response) => {
-      //console.log(response);
-    });
-  }, []);
-  /*======End uploadImage function======*/
 
   /*======Start sendPost function======*/
   const sendPost = async (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
     //console.log(inputRef);
-    try {
-      const docRef = await addDoc(collection(db, "messages"), {
-        email: session?.user?.email,
-        message: inputRef.current.value,
-        name: session?.user?.name,
-        image: session?.user?.image,
-        createdAt: serverTimestamp(),
-      });
 
-      console.log("Message written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error sending message: ", e);
-    }
-    inputRef.current.value = "";
+    const docRef = await addDoc(collection(db, "messages"), {
+      email: session?.user?.email,
+      message: inputRef.current.value,
+      name: session?.user?.name,
+      image: session?.user?.image,
+      createdAt: serverTimestamp(),
+    });
+    const imageRef = ref(storage, `images/${docRef.id}`);
+    await uploadString(imageRef, imageUpload, "data_url").then(
+      async (snapshot) => {
+        const downloadURL = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "messages", docRef.id), {
+          postImage: downloadURL,
+        });
+      }
+    );
+    setImageUpload(null);
+
+    console.log("Message written with ID: ", docRef.id);
+
+    
   };
   /*======End sendPost function======*/
 
@@ -59,6 +57,16 @@ function InputBox() {
     setImageUpload(null);
   };
   /*======End removeImage function======*/
+  const addImageToPost = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setImageUpload(readerEvent.target.result);
+    };
+  };
   return (
     <div className="bg-white p-2 rounded-2xl shawow-md text-gray-500 font-medium mt-6">
       <div className="flex space-x-4 p-4 items-center">
@@ -85,7 +93,13 @@ function InputBox() {
           onClick={removeImage}
           className="flex flex-col filter hover:brightness-110 transition duration-150 transform hover:scale-105 cursor-pointer"
         >
-          <img className="h-10 object-contain" src={uploadImage} alt="" />
+          <img
+            className="h-10 object-contain"
+            src={imageUpload}
+            onClick={() => setImageUpload(null)}
+            alt=""
+          />
+
           <p className="text-xs text-red-500 text-center">Remove</p>
         </div>
       </div>
@@ -96,24 +110,23 @@ function InputBox() {
           <p className="text-xs sm:text-sm xl:text-base">Vidéo en direct</p>
         </div>
 
-        <div className="inputIcon" >
-          <CameraIcon className="h-7 text-green-400" />
-          <p onClick={uploadImage}  className="text-xs sm:text-sm xl:text-base">
-            Photo/Video
-          </p>
-          <input
-            ref={filepickerRef}
-            onChange={(event) => {
-              setImageUpload(event.target.files[0]);
-            }}
-            type="file"
-            hidden
-            
-            
-            
-            
-          />
-          
+        <div className="inputIcon">
+          <form>
+            <input
+              ref={filepickerRef}
+              onChange={addImageToPost}
+              hidden
+              type="file"
+            />
+          </form>
+
+          <div
+            className="inputIcon"
+            onClick={() => filepickerRef.current.click()}
+          >
+            <CameraIcon className="h-7 text-green-400" />
+            <p className="text-xs sm:text-sm xl:text-base">Photo/Video</p>
+          </div>
         </div>
 
         <div className="inputIcon">

@@ -1,11 +1,11 @@
 import React from 'react';
-import { getFirestore, collection } from 'firebase/firestore';
+import { getFirestore, collection, doc } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '@/firebase';
 import Post from './Post';
 
 const Posts = () => {
-  const [value, loading, error] = useCollection(
+  const [value] = useCollection(
     collection(db, 'messages'),
 
   );
@@ -22,6 +22,7 @@ const Posts = () => {
               name={doc.data().name}
               email={doc.data().email}
               image={doc.data().image}
+              postImage={doc.data().postImage}
               message={doc.data().message}
               createdAt={doc.data().createdAt}
             />
